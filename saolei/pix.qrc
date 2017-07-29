@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/bomber.png</file>
+        <file>images/know.png</file>
+        <file>images/2.png</file>
+        <file>images/1.png</file>
+        <file>images/3.png</file>
+        <file>images/4.png</file>
+        <file>images/5.png</file>
+        <file>images/6.png</file>
+        <file>images/7.png</file>
+        <file>images/8.png</file>
+        <file>images/9.png</file>
+        <file>images/cd.png</file>
+        <file>images/kai.png</file>
+        <file>images/shuming.png</file>
+        <file>images/tui.png</file>
+        <file>images/xuanxiang.png</file>
+        <file>images/ico.jpeg</file>
+        <file>images/mine.jpg</file>
+        <file>images/boom.jpg</file>
+        <file>images/qiu.jpg</file>
+        <file>images/jingxing.png</file>
+        <file>images/shengli.png</file>
+        <file>images/shibai.png</file>
+        <file>images/ok.jpg</file>
+        <file>images/end1.jpg</file>
+    </qresource>
+</RCC>
