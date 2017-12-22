@@ -1,3 +1,3 @@
 ## This is a C、CPP、JAVA language homework.
 
-![sao lei](Curriculum-Design / saolei-CPP / picture /sao1.PNG)
+![sao lei](https://github.com/Baisha-Geek/Curriculum-Design/tree/master/saolei-CPP/picture)
