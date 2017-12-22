@@ -1,0 +1,23 @@
+#ifndef STUDENTS_H
+#define STUDENTS_H
+#include <QString>
+#include <QList>
+class students
+{
+public:
+    QString ID,
+            name,
+            clas,
+            sex,
+            age,
+            dornum,
+            telnum,
+            average;
+    QList <course> course;
+    
+   // student();
+   // ~student();
+}
+
+
+#endif // STUDENTS_H

@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/new">
+        <file>images/登录.png</file>
+        <file>images/退出.png</file>
+        <file>images/注册.png</file>
+        <file>images/206搜索.png</file>
+        <file>images/245筛选过滤.png</file>
+        <file>images/addition_fill.png</file>
+        <file>images/empty_fill.png</file>
+        <file>images/homepage_fill.png</file>
+        <file>images/other.png</file>
+        <file>images/setup_fill.png</file>
+        <file>images/新建.png</file>
+        <file>images/227注册、添加好友.png</file>
+        <file>images/feedback_fill.png</file>
+        <file>images/修改密码.png</file>
+        <file>images/editor.png</file>
+        <file>images/插入.png</file>
+        <file>images/保存.png</file>
+        <file>images/导入.png</file>
+        <file>images/成绩管理.png</file>
+        <file>images/bg.jpg</file>
+        <file>images/退出主.png</file>
+    </qresource>
+</RCC>

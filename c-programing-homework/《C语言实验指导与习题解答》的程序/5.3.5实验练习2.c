@@ -1,0 +1,29 @@
+#include<stdio.h>
+main()
+{
+	int a,b,c,d,i,sum=0;
+	for(a=1;a<=26;a++)
+	{
+		for(d=1;d<=26;d++)
+		{
+			b=4*a+6*d;
+			if(b!=26)
+				continue;
+			else
+			{
+				c=a*(a+d)*(a+2*d)*(a+3*d);
+				if(c!=880)
+					continue;
+				else
+				{
+					for(i=0;i<6;i++)
+					{
+						printf("%d,",a+i*d);
+						sum+=a+i*d;
+					}
+				}
+			}	
+		}
+	}
+	printf("\n数列的前6项和：%d\n",sum);
+}
