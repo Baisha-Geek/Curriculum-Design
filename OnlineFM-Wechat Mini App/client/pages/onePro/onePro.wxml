@@ -1,0 +1,34 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="navigation">
+    <navigator class="{{active1}}" id="intro" bindtap='proIntro'>项目介绍</navigator>
+    <navigator class="{{active2}}" id="file" bindtap='proFile'>文件</navigator>
+  </view>
+  <!-- 项目介绍 -->
+  <view id='proIntro' style='display:{{navigation1}}'>
+    <view class="introPage">
+      <view class="introLine">
+        <navigator class="left">项目名称</navigator>
+        <navigator class="right">{{project.name}}</navigator>
+      </view>
+      <view class="introLine">
+        <navigator class="left">项目成员</navigator>
+        <navigator class="right">
+        <text wx:for="{{project.member}}" wx:key="key">{{item.userName}}<text decode='{{true}}' space='{{true}}'>&nbsp;&nbsp;</text></text>
+        <navigator style='clear:left'></navigator>
+        </navigator>
+      </view>
+    </view>
+  </view>
+  <!-- 项目文件 -->
+  <view id='proFile' style='display:{{navigation2}}'>
+    <view class="filePage">
+      <view class="fileLine" wx:for="{{project.file}}" wx:key="key">
+        <navigator class="left"><image src='../../image/{{item.kind}}.png'></image>{{item.name}}</navigator>
+        <navigator class="right">上传者：{{item.author}}</navigator>
+      </view>
+    </view>
+    <button class="btn" id="upload" bindtap='upload'>上传文件</button>
+  </view>
+  
+</view>

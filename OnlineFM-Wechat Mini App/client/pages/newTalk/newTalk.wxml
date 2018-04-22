@@ -1,0 +1,10 @@
+<view class="container">
+  <form>
+    <input placeholder="输入群聊名称"/>
+    <navigator class="tip">设置群聊成员</navigator>
+    <navigator class="talkMember" wx:for="{{member}}" wx:key="key">{{item.name}}</navigator>
+    <image src='../../image/add.png'/>
+    <navigator class="tip">添加新成员</navigator>
+  </form>
+  <button class="btn">确认建立</button>
+</view>

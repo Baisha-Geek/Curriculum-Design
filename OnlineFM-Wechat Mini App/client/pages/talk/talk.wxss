@@ -1,0 +1,61 @@
+.container{
+  padding: 0
+}
+.navigation{
+  position: absolute;
+  top: 0;
+  background-color: #00bbf0;
+  width: 100%;
+}
+.navigation navigator{
+  padding: 10px;
+  float: left;
+  width: 50%;
+  text-align: center;
+  color: #fff;
+  font-size: 14px;
+  box-sizing: border-box;
+  opacity: 0.7
+}
+.navigation navigator.active{
+  border-bottom: 1px solid rgba(255, 255, 140, 1);
+  opacity: 1
+}
+.talkList{
+  margin-top: 40px;
+  width: 100%;
+}
+.talkLine{
+  border-bottom:1px solid rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  box-sizing: border-box
+}
+.talkLine image{
+  width: 20px;
+  height: 20px;
+  float: left;
+  margin-right: 10px
+}
+.talkName{
+  float: left
+}
+.endTalk{
+  font-size: 12px;
+  opacity: 0.3;
+  text-align: right;
+}
+.navigator-hover{
+  background-color: #fff
+}
+#newTalk{
+  width: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1)
+}
+#newTalk image{
+  width: 20px;
+  height: 20px;
+  float: left;
+  margin-right: 10px
+}

@@ -1,0 +1,20 @@
+<view class="container">
+  <view wx:if="{{login}}" class="box">
+    <view id="searchline">
+      <icon class="input" type="search"/>
+      <input class="input" id="inputLine" placeholder="搜索文档"/>
+      <icon class="input" bindtap='search' type="success_no_circle" id="check" color="gray"/>
+    </view>
+    <view id="doclist" >
+      <view class="item" wx:for="{{documentList}}" wx:key="key">
+        <navigator class="docName">{{item.name}}</navigator>
+        <navigator class="docContent">{{item.content}}</navigator>
+      </view>
+    </view>
+  </view>
+  <view wx:else class='box'>
+    <view id='tip'>
+      请先绑定账号
+    </view>
+  </view>
+</view>

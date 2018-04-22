@@ -1,0 +1,41 @@
+<!--index.wxml-->
+<view class="container">
+  <view wx:if="{{login}}" class="box">
+    <view class="navigation">
+      <navigator class="{{active1}}" id="allProjects" bindtap='allPros'>所有项目</navigator>
+      <navigator class="{{active2}}" id="endProjects" bindtap='endPros'>已结束的项目</navigator>
+    </view>
+    <!-- 所有项目 -->
+    <view id='allPro' style='display:{{navigation1}}'>
+        <view class="projectList ">
+          <view class="projectLine" wx:for="{{project}}" wx:key="key">
+            <image src="../../image/doc.png"/>
+            <navigator class="proName" id="pro{{item.id}}" bindtap='onePro' data-name="{{item.projectName}}">{{item.projectName}}</navigator>
+            <navigator class="endPro" id="end{{item.id}}">结束项目</navigator>
+            <view class='clear'></view>
+          </view>
+        </view>
+        <view id="newPro" style="display:{{limit}}">
+          <image bindtap="newPro" src='../../image/add.png'/>
+          <navigator>新建项目</navigator>
+        </view>
+    </view>
+    
+    <!-- 已结束的项目 -->
+    <view id='endPro' style='display:{{navigation2}}'>
+      <view class="projectList">
+        <view class="projectLine" wx:for="{{project}}" wx:key="key">
+          <image src="{{item.kind}}"/>
+          <navigator class="proName" bindtap='onePro'>{{item.name}}</navigator>
+          <view class='clear'></view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view wx:else class='box'>
+    <view id='tip'>
+      请先绑定账号
+    </view>
+  </view>
+  
+</view>

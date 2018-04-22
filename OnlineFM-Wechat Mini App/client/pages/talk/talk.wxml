@@ -1,0 +1,18 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="navigation">
+    <navigator class="active" id="allTalks">所有群聊</navigator>
+    <navigator id="endTalks">已结束的群聊</navigator>
+  </view>
+  <view class="talkList">
+    <view class="talkLine" wx:for="{{talk}}" wx:key="key">
+      <image src="{{item.kind}}"/>
+      <navigator class="talkName">{{item.name}}</navigator>
+      <navigator class="endTalk" id="{{item.id}}">结束群聊</navigator>
+    </view>
+  </view>
+  <view id="newTalk">
+    <image bindtap="newTalk" src='../../image/add.png'/>
+    <navigator>新建群聊</navigator>
+  </view>
+</view>

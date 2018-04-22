@@ -1,0 +1,53 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/addCgi/addCgi",
+    "pages/logs/logs",
+    "pages/ser/search",
+    "pages/talk/talk",
+    "pages/my/my",
+    "pages/newPro/newPro",
+    "pages/newTalk/newTalk",
+    "pages/onePro/onePro"
+  ],
+  "tabBar": {
+    "color": "#666",
+    "selectedColor": "#268dcd",
+    "borderStyle": "white",
+    "backgroundColor": "#fafafa",
+    "list": [
+      {
+        "pagePath": "pages/ser/search",
+        "text": "搜索",
+        "iconPath": "image/ser2.png",
+        "selectedIconPath": "image/ser1.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "项目",
+        "iconPath": "image/pro2.png",
+        "selectedIconPath": "image/pro1.png"
+      },
+      {
+        "pagePath": "pages/talk/talk",
+        "text": "群聊",
+        "iconPath": "image/talk2.png",
+        "selectedIconPath": "image/talk1.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我",
+        "iconPath": "image/man2.png",
+        "selectedIconPath": "image/man1.png"
+      }
+    ]
+  },
+  "window":{
+    "backgroundColor":"#F6F6F6",
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "Wafer Quick Start",
+    "navigationBarTextStyle":"black"
+  }
+}
+

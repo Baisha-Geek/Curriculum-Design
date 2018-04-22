@@ -1,0 +1,37 @@
+/* pages/newPro/newPro.wxss */
+.container{
+  padding: 0;
+}
+form{
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box
+}
+.container image{
+  width: 20px;
+  height: 20px;
+  float: left;
+  margin-top: 10px;
+  margin-right: 10px
+}
+.container input{
+  background-color: #f9f9f9;
+  padding: 4px;
+  border-radius: 2px;
+  font-size: 14px;
+}
+.proMember{
+  background-color: #f9f9f9;
+  padding: 10px;
+}
+.tip{
+  padding: 10px 5px;
+}
+.navigator-hover{
+  background-color: #fff
+}
+.btn{
+  background-color: #00bbf0;
+  color: #fff;
+  font-size: 14px
+}

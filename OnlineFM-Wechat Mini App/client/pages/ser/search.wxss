@@ -1,0 +1,52 @@
+/* pages/ser/search.wxss */
+.container{
+  padding: 0
+}
+.box{
+  width: 100%;
+}
+#searchline{
+  width: 100%;
+  position: absolute;
+  top: 0;
+  padding: 10px;
+  background-color:#f9f9f9
+}
+.input{
+  float: left;
+}
+.input:first-child{
+  margin-left: 20px
+}
+.input:last-child{
+  float: right;
+  margin-right: 20px
+}
+#inputLine{
+  margin: 0 5px;
+  background-color:#ffffff;
+  box-sizing: border-box
+}
+#doclist{
+  width: 100%;
+  margin-top: 50px;
+}
+.item{
+  padding: 10px;
+  border-bottom: 1px solid #f9f9f9;
+  box-sizing: border-box;
+}
+.docName{
+  font-size: 16px;
+  color:rgba(0, 0, 0, 1);
+  opacity: 0.87
+}
+.docContent{
+  font-size: 14px;
+  color:rgba(0, 0, 0, 1);
+  opacity: 0.54
+}
+#tip{
+  text-align: center;
+  margin-top: 20px;
+}
