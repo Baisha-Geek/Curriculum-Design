@@ -1,17 +1,13 @@
 <!--my.wxml-->
 <view class="container">
 <!-- 用户登录测试 -->
-    <view class="userinfo" bindtap="login">
-        <image
-            class="userinfo-avatar"
-            src="{{logged ? userInfo.avatarUrl : './user-unlogin.png'}}"
-            background-size="cover"
-        ></image>
-        <view>
-            <text class="userinfo-nickname">{{logged ? userInfo.nickName : '点击登录'}}</text>
-            <text class="userinfo-nickname" wx:if="{{logged}}">{{userInfo.lastLoginTime}}</text>
-        </view>
-    </view>
+  <view class="userinfo">
+    <button class="btn small" wx:if="{{!(hasUserInfo && canIUse)}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获得用户授权</button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    </block>
+    <view class="clear"></view>
+  </view>
      <view wx:if="{{login}}" id="infoMain">
       <view class="line"><navigator class="infoLeft">姓名：</navigator><navigator class="infoRight">{{user.name}}</navigator>
         <view class="clear"></view>
@@ -31,7 +27,7 @@
         </view>
         <view class="line">
           <navigator class="infoLeft" >密码：</navigator>
-          <input name="password" class="infoRight infoInput"/>
+          <input name="password" password='true' class="infoRight infoInput"/>
           <view class="clear"></view>
         </view>
         <view class="line">

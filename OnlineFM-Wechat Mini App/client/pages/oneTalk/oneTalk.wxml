@@ -1,0 +1,68 @@
+<!--oneTalk.wxml-->
+<view class="container"> 
+  <view class="navigation">
+    <navigator class="{{active1}}" id="intro" bindtap='talkContent'>内容</navigator>
+    <navigator class="{{active2}}" id="file" bindtap='talkFile'>文件</navigator>
+  </view>
+  <!-- 群聊内容 -->
+  <view id='talkContent' style='display:{{navigation1}}'>
+
+    <view class="talkList">
+        <scroll-view scroll-y="true" scroll-top="{{scrollTop}}" class="history" wx:for="{{oldMessage}}" wx:key=''>  
+          <view class='time'>  
+            <text class='time_txt'>{{item.time}}</text>
+          </view>  
+          <block wx:if="{{item.object == 0}}">  
+            <view class='message-right'>  
+              <view class='message-row'>
+                <image class='message-img' src='{{item.head_owner}}'></image>
+                <view wx:if='{{!item.is_img}}' class='sanjiao my'></view>
+                <text wx:if='{{!item.is_img}}' class='message-txt'>{{item.content}}</text>  
+                <image wx:if='{{item.is_img}}' src='{{item.content}}' class='message-imagecontent'></image>
+              </view>  
+            </view> 
+          </block>  
+          <block wx:else>  
+            <view class='message-left'>  
+              <view class='message-row'>  
+                <image class='message-img' src='{{item.head_owner}}'></image>  
+                <view wx:if='{{!item.is_img}}' class='sanjiao you'></view>  
+                <text wx:if='{{!item.is_img}}' class='message-txt'>{{item.content}}</text>
+                <image wx:if='{{item.is_img}}' src='{{item.filePath}}' class='message-imagecontent'></image>
+              </view>  
+            </view>  
+          </block>  
+        </scroll-view>  
+    </view> 
+    <view class="bottom" id="bottom"></view>
+    <view class="sendmessage">
+      <image bindtap="upload" class='add_img' src='../../image/addImg.png'></image>
+      <input type="emoji" bindinput="bindChange" confirm-type="done" value='{{message_input}}' placeholder="" />  
+      <button catchtap="add">发送</button>
+      <input style='display:none' type="" bindinput="bindChange" confirm-type="done" placeholder="" />
+      <view wx:if="{{showModal}}" class="modal-mask"></view>
+      <view class="modal-dialog" wx:if="{{showModal}}">
+      <view class="modal-head">重命名文件</view>
+      <view class="modal-content">
+        <input placeholder='请输入文件名字' type="text" bindinput='filename' auto-focus/>
+      </view>
+      <view class="modal-footer">
+        <view class="btn-confirm" bindtap='onConfirm'>确定</view>
+      </view>
+    </view>
+    </view>  
+  </view>
+
+
+  <!-- 项目文件 -->
+  <view id='talkFile' style='display:{{navigation2}}'>
+    <view class="filePage">
+      <view class="fileLine" wx:for="{{talk.file}}" wx:key="key">
+        <navigator class="left"  bindtap="previewImage" data-path="{{item.filePath}}"><image src='{{item.filePath}}'></image>{{item.fileName}}</navigator>
+        <navigator class="right">上传者：{{item.uploadName}}</navigator>
+        <view class="clearfix"></view>
+      </view>
+    </view>
+  </view>
+  
+</view>

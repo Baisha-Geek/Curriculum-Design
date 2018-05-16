@@ -10,12 +10,14 @@ Page({
       authority: 0,
       name: ""
     },
+    is_display:"",
     project: [],
     navigation1: "",
     navigation2: "none",
     active1: "active",
     active2: "unactive",
-    limit: "none"
+    limit: "",
+    none_display:""
   },
   onShow: function(e){
     var that=this;
@@ -28,29 +30,24 @@ Page({
       })
     }
     else{
-      wx.request({
-        url: config.service.getProsUrl,
-        method: 'POST',
-        header: {
-          'Content-Type': 'application/json'
-        },
-        data: { userName:getApp().globalData.userName,logged:getApp().globalData.login},
-        success(result) {
-          if (result) {
-            that.setData({
-              project: result.data.projectTable
-            })
-          }
-        }
-      })
+      that.allPros();
+      if (app.globalData.authority === "0"){
+        that.setData({
+          is_display: "none"
+        })
+      }
+      else{
+        that.setData({
+          is_display: "block"
+        })
+      }
       that.setData({
-        login:true,
-        user:{
+        login: true,
+        user: {
           name: getApp().globalData.userName
         }
       })
     }
-    console.log(that.data.login);
   },
 
   newPro: function (e) {
@@ -60,25 +57,90 @@ Page({
   },
   onePro: function (e) {
     var that=this;
-    console.log(e.currentTarget.dataset.name);
     wx.navigateTo({
-      url: '../onePro/onePro?proname='+e.currentTarget.dataset.name+'',
+      url: '../onePro/onePro?proid='+e.currentTarget.dataset.id+'&proname='+e.currentTarget.dataset.name+'',
     })
   },
+  endOnePro:function(e){
+    var that=this;
+    wx.request({
+      url: config.service.endOneProUrl,
+      method:'POST',
+      header:{
+        'Content-Type':'application/json'
+      },
+      data: { userName: getApp().globalData.userName, proId: e.currentTarget.dataset.id,projectName:e.currentTarget.dataset.name,userId:getApp().globalData.id},
+      success(res){
+        if(res.data.status===0){
+          wx.showToast({
+            title: '已结束项目',
+            icon: 'success',
+            duration: 2000
+          });
+          that.allPros();
+        }
+      }
+    })
+
+  },
   endPros: function (e) {
-    this.setData({
+    var that=this;
+    that.setData({
       navigation1: "none",
       navigation2: "",
-      active1: "unacitve",
+      active1: "unactive",
       active2: "active"
+    });
+    wx.request({
+      url: config.service.getProsUrl,
+      method: 'POST',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      //获取已结束的项目
+      data: { userName: getApp().globalData.userName, userId: getApp().globalData.id, status:"1",logged: getApp().globalData.login },
+      success(result) {
+        if (result) {
+          that.setData({
+            project: result.data.projectTable
+          })
+        }
+      }
     })
   },
   allPros: function (e) {
-    this.setData({
+    var that=this;
+    that.setData({
       navigation1: "",
       navigation2: "none",
-      active1: "acitve",
+      active1: "active",
       active2: "unactive"
-    })
+    });
+    wx.request({
+      url: config.service.getProsUrl,
+      method: 'POST',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      //获取未结束的项目
+      data: { userName: getApp().globalData.userName,userId:getApp().globalData.id, status: "0", logged: getApp().globalData.login },
+      success(result) { 
+        if (result) {
+          that.setData({
+            project: result.data.projectTable
+          });
+          if(that.data.project.length===0){
+            that.setData({
+              none_display:"block"
+            })
+          }
+          else{
+            that.setData({
+              none_display:"none"
+            })
+          }
+        }
+      }
+    });
   }
 })

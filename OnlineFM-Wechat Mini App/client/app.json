@@ -5,10 +5,12 @@
     "pages/logs/logs",
     "pages/ser/search",
     "pages/talk/talk",
-    "pages/my/my",
     "pages/newPro/newPro",
+    "pages/my/my",
     "pages/newTalk/newTalk",
-    "pages/onePro/onePro"
+    "pages/onePro/onePro",
+    "pages/oneDoc/oneDoc",    
+    "pages/oneTalk/oneTalk"    
   ],
   "tabBar": {
     "color": "#666",

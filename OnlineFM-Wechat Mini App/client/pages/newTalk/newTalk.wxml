@@ -1,10 +1,24 @@
 <view class="container">
   <form>
-    <input placeholder="输入群聊名称"/>
-    <navigator class="tip">设置群聊成员</navigator>
-    <navigator class="talkMember" wx:for="{{member}}" wx:key="key">{{item.name}}</navigator>
-    <image src='../../image/add.png'/>
-    <navigator class="tip">添加新成员</navigator>
+    <input bindinput="enterName" placeholder="输入群聊名称"/>
+    <navigator class="tip">设置项目成员</navigator>
+    <navigator class="talkMember" wx:for="{{addmember}}" wx:key="key">{{item}}</navigator>
+    <navigator bindtap="addMember" class="tip"><image src='../../image/add.png'/>添加新成员</navigator>
+    <view wx:if="{{showModal}}" class="modal-mask"></view>
+    <view class="modal-dialog" wx:if="{{showModal}}">
+      <view class="modal-head">选择成员</view>
+      <view class="modal-content">
+        <checkbox-group bindchange="checkboxChange">
+          <label class="checkbox" wx:for="{{member}}" wx:key="key">
+            <view><checkbox value='{{item.userName}}' checked='{{item.checked}}'/>{{item.userName}}</view>
+          </label>
+        </checkbox-group>
+      </view>
+      <view class="modal-footer">
+        <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+        <view class="btn-confirm" bindtap="onConfirm" data-status="confirm">确定</view>
+      </view>
+    </view>
   </form>
-  <button class="btn">确认建立</button>
+  <button bindtap="create" class="btn">确认建立</button>
 </view>

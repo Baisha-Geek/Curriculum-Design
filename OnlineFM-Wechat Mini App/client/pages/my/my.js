@@ -17,49 +17,52 @@ Page({
     user: {
       name: '',
       number: '',
-      password: ''
+      password: '',
     },
-    login: false
+    login: false,
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
   },
-
-  login: function () {
-    if (this.data.logged) return
-    util.showBusy('正在登录')
-    var that = this
-    // 调用登录接口
-    qcloud.login({
-      success(result) {
-        if (result) {
-          util.showSuccess('登录成功')
-          that.setData({
-            userInfo: result,
+  onLoad:function(){
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo,
+        hasUserInfo: true,
+        logged:true
+      })
+    } else if (this.data.canIUse) {
+      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+      // 所以此处加入 callback 以防止这种情况
+      app.userInfoReadyCallback = res => {
+        this.setData({
+          userInfo: res.userInfo,
+          hasUserInfo: true,
+          logged:true
+        })
+      }
+    } else {
+      // 在没有 open-type=getUserInfo 版本的兼容处理
+      wx.getUserInfo({
+        success: res => {
+          app.globalData.userInfo = res.userInfo
+          this.setData({
+            userInfo: res.userInfo,
+            hasUserInfo: true,
             logged: true
           })
-        } else {
-          // 如果不是首次登录，不会返回用户信息，请求用户信息接口获取
-          qcloud.request({
-            url: config.service.requestUrl,
-            login: true,
-            success(result) {
-              util.showSuccess('登录成功')
-              that.setData({
-                userInfo: result.data.data,
-                logged: true
-              });
-            },
-            fail(error) {
-              util.showModel('请求失败', error)
-              console.log('request fail', error)
-            }
-          })
         }
-      },
-      fail(error) {
-        util.showModel('登录失败', error)
-        console.log('登录失败', error)
-      }
+      })
+    }
+  },
+  getUserInfo: function (e) {
+    console.log(e)
+    app.globalData.userInfo = e.detail.userInfo
+    this.setData({
+      userInfo: e.detail.userInfo,
+      hasUserInfo: true,
+      logged:true
     })
   },
+
 
   // 切换是否带有登录态
   switchRequestMode: function (e) {
@@ -91,12 +94,12 @@ Page({
           }
         }
       })
-    }
+    } 
     else{
       wx.request({
         url: config.service.bindUrl,
         method: 'POST',
-        header: {
+        header: { 
           'Content-Type': 'application/json'
         },
         data: { number: e.detail.value.number, password: e.detail.value.password, logged: that.data.logged },
@@ -106,10 +109,12 @@ Page({
             util.showSuccess('绑定成功');
             app.globalData.userName = res.data.data.name;
             app.globalData.login=true;
+            app.globalData.authority=res.data.data.authority;
+            app.globalData.id=res.data.data.id;
             that.setData({
               user: {
                 name: res.data.data.name,
-                number: res.data.data.number
+                number: res.data.data.number,
               },
               login: true
             })

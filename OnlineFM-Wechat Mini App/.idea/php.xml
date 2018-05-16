@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/server/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/server/vendor/qcloud/weapp-sdk" />
+      <path value="$PROJECT_DIR$/server/vendor/qcloud/cos-sdk-v5" />
+      <path value="$PROJECT_DIR$/server/vendor/composer" />
+      <path value="$PROJECT_DIR$/server/vendor/guzzle/guzzle" />
+    </include_path>
+  </component>
+</project>

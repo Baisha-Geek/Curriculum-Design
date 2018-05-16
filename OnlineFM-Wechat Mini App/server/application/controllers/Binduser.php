@@ -19,10 +19,10 @@ class Binduser extends CI_Controller {
         else{
             $frontNumber = $data['number'];
             $frontPwd = $data['password'];
-            $useInfo = DB::row('user', ['userName','userPwd','root'], ['userNumber' => $frontNumber]);  //返回得到一个对象，需要通过$object->key访问数据
+            $userInfo = DB::row('user', ['id','userName','userPwd','root'], ['userNumber' => $frontNumber ]);  //返回得到一个对象，需要通过$object->key访问数据
             
             //用户不存在
-            if($useInfo == NULL){
+            if($userInfo == NULL){
                 $this->json([
                     'status' => -2,
                     'message' => '用户不存在'
@@ -30,14 +30,15 @@ class Binduser extends CI_Controller {
             }
             else{
                 //密码是否正确
-                if($useInfo->userPwd == $frontPwd){    //不能使用$useInfo['userPwd']
+                if($userInfo->userPwd == $frontPwd){    //不能使用$userInfo['userPwd']
                     $this->json([
                         'status' => 0,
                         'message' => '成功绑定用户信息',
                         'data' => [
-                            'name' => $useInfo->userName,
+                            'id' => $userInfo->id,
+                            'name' => $userInfo->userName,
                             'number' => $frontNumber,
-                            'authority' => $useInfo->root
+                            'authority' => $userInfo->root
                         ]
                     ]);
                 }

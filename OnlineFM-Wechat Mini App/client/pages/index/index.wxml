@@ -10,14 +10,17 @@
         <view class="projectList ">
           <view class="projectLine" wx:for="{{project}}" wx:key="key">
             <image src="../../image/doc.png"/>
-            <navigator class="proName" id="pro{{item.id}}" bindtap='onePro' data-name="{{item.projectName}}">{{item.projectName}}</navigator>
-            <navigator class="endPro" id="end{{item.id}}">结束项目</navigator>
+            <navigator class="proName" id="pro{{item.id}}" bindtap='onePro' data-name="{{item.projectName}}" data-id="{{item.id}}">{{item.projectName}}</navigator>
+            <navigator class="endPro" id="end{{item.id}}" bindtap='endOnePro' data-name="{{item.projectName}}" data-id="{{item.id}}" style='display:{{is_display}}'>结束项目</navigator>
             <view class='clear'></view>
           </view>
+          <view class="projectLine" style='display:{{none_display}}'>
+          <text>暂无项目</text>
+          </view>
         </view>
-        <view id="newPro" style="display:{{limit}}">
+        <view id="newPro" style="display:{{is_display}}">
           <image bindtap="newPro" src='../../image/add.png'/>
-          <navigator>新建项目</navigator>
+          <text>新建项目</text>
         </view>
     </view>
     
@@ -25,14 +28,17 @@
     <view id='endPro' style='display:{{navigation2}}'>
       <view class="projectList">
         <view class="projectLine" wx:for="{{project}}" wx:key="key">
-          <image src="{{item.kind}}"/>
-          <navigator class="proName" bindtap='onePro'>{{item.name}}</navigator>
+          <image src="../../image/doc.png"/>
+          <navigator class="proName" bindtap='onePro' data-id="{{item.id}}" data-name="{{item.projectName}}">{{item.projectName}}</navigator>
           <view class='clear'></view>
+        </view>
+        <view class="projectLine" style='display:{{none_display}}'>
+          <text>暂无项目</text>
         </view>
       </view>
     </view>
   </view>
-  <view wx:else class='box'>
+  <view wx:else class='box'> 
     <view id='tip'>
       请先绑定账号
     </view>

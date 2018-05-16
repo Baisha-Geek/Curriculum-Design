@@ -1,0 +1,263 @@
+.container{
+  padding: 0
+}
+.navigation{
+  position: fixed;
+  top: 0;
+  background-color: #00bbf0;
+  width: 100%;
+  z-index: 333;
+}
+.navigation navigator{
+  padding: 10px;
+  float: left;
+  width: 50%;
+  text-align: center;
+  color: #fff;
+  font-size: 14px;
+  box-sizing: border-box;
+  opacity: 0.7
+}
+.navigation navigator.active{
+  border-bottom: 1px solid rgba(255, 255, 140, 1);
+  opacity: 1
+}
+#talkContent,#talkFile{
+  width: 100%
+}
+.filePage{
+  margin-top: 40px;
+  width: 100%;
+}
+.fileLine{
+  border-bottom:1px solid rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  box-sizing: border-box
+}
+.fileLine image{
+  width: 20px;
+  height: 20px;
+  float: left;
+  margin-right: 10px
+}
+.left{
+  width: 30%;
+  float: left
+}
+.right{
+  width: 70%;
+  font-size: 12px;
+  opacity: 0.3;
+  text-align: right;
+  float: right;
+}
+.btn{
+  margin-top: 20px;
+  width: 150px;
+  background-color: #00bbf0;
+  color:#fff;
+  font-size: 14px;
+}
+.clearfix{
+  clear: both
+}
+
+/* 模态框 */
+.modal-mask {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.5;
+  overflow: hidden;
+  z-index: 9000;
+  color: #fff;
+}
+
+.modal-dialog {
+  width: 200px;
+  position: fixed;
+  top: 50%;
+  left:50%;
+  height: 88px;
+  z-index: 9999;
+  background: #fff;
+  opacity: 1;
+  margin: -100px;
+  border-radius: 4px;
+}
+
+.modal-head {
+  padding: 4px;
+  font-size: 16px;
+  color: #030303;
+  text-align: center;
+  background-color:#f9f9f9;
+}
+
+.modal-content {
+  overflow-y: scroll;
+  height: 32px;
+  padding: 2px;
+  box-sizing: border-box;
+  font-size: 14px
+}
+.checkbox{
+  margin-bottom:4px;
+}
+
+.modal-footer {
+  display: flex;
+  flex-direction: row;
+  height: 28px;
+  border-top: 1px solid #dedede;
+  font-size: 16px;
+  /* line-height: 20px; */
+}
+
+.btn-confirm {
+  width: 100%;
+  color: #ec5300;
+  text-align: center;
+}
+
+
+/* 聊天 */
+.talkList {  
+  height: 90%;  
+  width: 100%;  
+  flex-direction: column;  
+  display: flex;  
+  margin-top: 100rpx;  
+  border-top: 0px;  
+}  
+.history {  
+  height: 100%;  
+  margin-top: 15px;  
+  margin: 0;
+  font-size: 14px;  
+  line-height: 40px;  
+  word-break: break-all;
+  box-sizing: border-box;
+} 
+/* 时间 */
+.time {
+  text-align: center;  
+  width: 100%;  
+}  
+.time_txt{
+padding: 5rpx 20rpx 5rpx 20rpx;  
+  width: 200rpx;
+  font-size: 26rpx;  
+  background-color: #E8E8E8;  
+}
+/*其他用户发的消息在左边有单独样式*/
+.message-left {  
+  float: left;  
+  position: relative;  
+  left: 10rpx;
+}
+.message-left .message-img{
+  float: left;
+  margin-right: 10rpx;
+}
+.message-left .sanjiao{
+  float: left;
+}
+.you {
+  border-color: transparent #d0d0d0 transparent transparent;
+}
+.message-left .message-txt{
+  background-color: #d0d0d0;
+  color: #000;
+  float: left;
+}
+/*本人发的消息另外一种样式*/
+.message-right {
+  float: right;
+  position: relative;
+  right: 10rpx;
+}
+.message-right .message-img{
+  float: right;
+  margin-left: 10rpx;
+}
+.message-right .sanjiao{
+  float: right;
+}
+.my {
+  border-color: transparent transparent transparent #95d4ff;
+}
+.message-right .message-txt{
+  background-color: #95d4ff;
+  color: #FFFFFF;
+  float: right;
+}
+
+/*用于消息样式的统一格式*/
+.message-img{  
+  width: 100rpx;  
+  height: 100rpx;  
+  border-radius: 50%;  
+}  
+.message-txt {  
+  width: 400rpx;
+  border-radius: 5px;
+  padding: 12rpx 30rpx;
+  word-break: break-all;
+  word-wrap: break-word;
+}  
+.message-imagecontent{  
+  height: 180rpx;
+  width: 190rpx;
+  margin-right: 10rpx;
+}  
+.sanjiao {  
+  top: 16rpx;
+  position: relative;
+  width: 0px;
+  height: 0px;
+  border-width: 25rpx;
+  border-style: solid;  
+}
+
+/*添加图片*/
+.add_img{
+  height: 80rpx;  
+  width: 90rpx;  
+}  
+.sendmessage {  
+  background-color: white;  
+  width: 100%;  
+  position: fixed;  
+  bottom: 0px;
+  display: flex;  
+  flex-direction: row;  
+}  
+  
+.sendmessage input {  
+  width: 80%;  
+  height: 40px;  
+  background-color: white;  
+  line-height: 40px;  
+  font-size: 14px;  
+  border: 1px solid #d0d0d0;  
+  padding-left: 10px;  
+}  
+  
+.sendmessage button {  
+  border-color: transparent;
+  width: 18%;  
+  height: 40px;  
+  background: #00bbf0;
+  color: #FFFFFF;
+  line-height: 40px;  
+  font-size: 12px;  
+}  
+.bottom{  
+  margin-top: 50px;  
+  height: 20rpx;  
+}  
+

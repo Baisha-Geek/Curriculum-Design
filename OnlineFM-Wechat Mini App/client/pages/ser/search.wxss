@@ -33,7 +33,7 @@
 }
 .item{
   padding: 10px;
-  border-bottom: 1px solid #f9f9f9;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
 }
 .docName{
@@ -45,6 +45,12 @@
   font-size: 14px;
   color:rgba(0, 0, 0, 1);
   opacity: 0.54
+}
+.item image{
+  width: 20px;
+  height: 20px;
+  float: left;
+  margin-right: 10px
 }
 #tip{
   text-align: center;

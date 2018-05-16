@@ -1,6 +1,12 @@
 .container{
   padding: 0
 }
+.box{
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+/* 导航 */
 .navigation{
   position: absolute;
   top: 0;
@@ -21,6 +27,10 @@
   border-bottom: 1px solid rgba(255, 255, 140, 1);
   opacity: 1
 }
+/* 主体 */
+#allTalk,#endTalk{
+  width: 100%
+}
 .talkList{
   margin-top: 40px;
   width: 100%;
@@ -36,16 +46,19 @@
   float: left;
   margin-right: 10px
 }
-.talkName{
-  float: left
+.talkLine text{
+  margin: 0 auto;
 }
+ .talkName{
+  float: left
+} 
 .endTalk{
   font-size: 12px;
   opacity: 0.3;
-  text-align: right;
+  float: right;
 }
-.navigator-hover{
-  background-color: #fff
+.clear{
+  clear:both
 }
 #newTalk{
   width: 100%;
@@ -58,4 +71,8 @@
   height: 20px;
   float: left;
   margin-right: 10px
+}
+#tip{
+  text-align: center;
+  margin-top: 20px;
 }

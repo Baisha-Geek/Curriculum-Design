@@ -4,10 +4,15 @@
 	"miniprogramRoot": "./client",
 	"qcloudRoot": "./server",
 	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
 		"newFeature": true
 	},
 	"appid": "wx53804cfb523df61b",
 	"projectname": "onlineFM",
+	"libVersion": "2.0.2",
 	"condition": {
 		"search": {
 			"current": -1,

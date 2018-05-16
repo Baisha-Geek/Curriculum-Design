@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/server/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/server/vendor/guzzle/guzzle" />
+      <excludeFolder url="file://$MODULE_DIR$/server/vendor/qcloud/cos-sdk-v5" />
+      <excludeFolder url="file://$MODULE_DIR$/server/vendor/qcloud/weapp-sdk" />
+      <excludeFolder url="file://$MODULE_DIR$/server/vendor/symfony/event-dispatcher" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

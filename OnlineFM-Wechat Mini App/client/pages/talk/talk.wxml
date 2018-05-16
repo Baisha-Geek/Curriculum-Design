@@ -1,18 +1,41 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="navigation">
-    <navigator class="active" id="allTalks">所有群聊</navigator>
-    <navigator id="endTalks">已结束的群聊</navigator>
-  </view>
-  <view class="talkList">
-    <view class="talkLine" wx:for="{{talk}}" wx:key="key">
-      <image src="{{item.kind}}"/>
-      <navigator class="talkName">{{item.name}}</navigator>
-      <navigator class="endTalk" id="{{item.id}}">结束群聊</navigator>
+  <view wx:if="{{login}}" class="box">
+    <view class="navigation">
+      <navigator class="{{active1}}" id="allTalks" bindtap='allTalks'>进行中</navigator>
+      <navigator class="{{active2}}" id="endTalks" bindtap='endTalks'>已结束的群聊</navigator>
+    </view>
+    <!-- 所有项目 -->
+    <view id='allTalk' style='display:{{navigation1}}'>
+        <view class="talkList ">
+          <view class="talkLine" wx:for="{{talk}}" wx:key="key">
+            <image src="../../image/talk.png"/>
+            <navigator class="talkName" id="talk{{item.id}}" bindtap='oneTalk' data-id="{{item.id}}" data-name="{{item.talkName}}">{{item.talkName}}</navigator>
+            <navigator class="endTalk" id="end{{item.id}}" bindtap='endOneTalk' data-id="{{item.id}}" data-name="{{item.talkName}}" style='display:{{item.is_display}}'>结束群聊</navigator>
+            <view class='clear'></view>
+          </view>
+        </view>
+        <view id="newTalk">
+          <image bindtap="newTalk" src='../../image/add.png'/>
+          <navigator>新建群聊</navigator>
+        </view>
+    </view>
+    
+    <!-- 已结束的群聊 -->
+    <view id='endTalk' style='display:{{navigation2}}'>
+      <view class="talkList">
+        <view class="talkLine" wx:for="{{talk}}" wx:key="key">
+          <image src="../../image/talk.png"/>
+          <navigator class="talkName" bindtap='oneTalk' data-id="{{item.id}}" data-name="{{item.talkName}}">{{item.talkName}}</navigator>
+          <view class='clear'></view>
+        </view>
+      </view>
     </view>
   </view>
-  <view id="newTalk">
-    <image bindtap="newTalk" src='../../image/add.png'/>
-    <navigator>新建群聊</navigator>
+  <view wx:else class='box'> 
+    <view id='tip'>
+      请先绑定账号
+    </view>
   </view>
+  
 </view>

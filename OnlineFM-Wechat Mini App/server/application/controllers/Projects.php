@@ -10,28 +10,51 @@ class Projects extends CI_Controller {
         $data = json_decode($raw, true);
         
         if($data['logged']===false){
-            $this->json([
+            return $this->json([
                 'status' => -1,
                 'message' => '请先登录'
             ]);
         }
-        else{
-            $frontName = $data['userName'];
-            $projectInfo = DB::select('project', ['id','projectName','creatName','status'], ['userName' => $frontName]);  
 
-            //项目不存在
-            if($projectInfo  == NULL){
-                $this->json([
-                    'status' => -1,
-                    'message' => '目前没有创建项目'
+        $getStatus=$data['status'];
+        $getName=$data['userName'];
+        //先查询权限
+        if(DB::select('user',['*'],['userName' => $getName, 'root' =>1]) != []) {
+            //管理员权限
+            $projectInfo = DB::select('project', ['id','projectName','creatName','status'], ['status' => $data['status']]);
+            if($projectInfo != []) {
+                return $this->json([
+                    'status' => 0,
+                    'message' => '已获得所有用户项目列表',
+                    'projectTable' => $projectInfo,
                 ]);
             }
-            else{
-                $this->json([
-                        'status' => 0,
-                        'message' => '已获得用户项目列表',
-                        'projectTable' => $projectInfo   
-                    ]);
+            else {
+                return $this->json([
+                    'status' => -2,
+                    'message' => '没有项目',
+                    'projectTable' => [],
+                ]);
+            }
+
+        }
+        else {
+            //非管理员权限
+            $query="select project.id, project.projectName, project.creatName, project.status from project inner join pmember on project.id=pmember.pid where pmember.member='$getName' and project.status='$getStatus'" ;
+            $projectInfo = DB::rawselect($query);
+            if($projectInfo != []) {
+                return $this->json([
+                    'status' => 0,
+                    'message' => '已获得该用户项目列表',
+                    'projectTable' => $projectInfo,
+                ]);
+            }
+            else {
+                return $this->json([
+                    'status' => -2,
+                    'message' => '没有项目',
+                    'projectTable' => [],
+                ]);
             }
         }
     }

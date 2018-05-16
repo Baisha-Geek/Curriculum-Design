@@ -174,6 +174,11 @@ class Mysql
         $query = self::raw($sql, $execValues);
         return $query->rowCount();
     }
+    public static function rawselect($sql,$execValues = []) {
+        $query = self::raw($sql,$execValues);
+        $allResult = $query->fetchAll(PDO::FETCH_OBJ);
+        return $allResult === NULL ? [] : $allResult;
+    }
 
     /**
      * 执行原生 SQL 语句

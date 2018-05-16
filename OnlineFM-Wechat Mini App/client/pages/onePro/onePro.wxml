@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="container">
+<view class="container"> 
   <view class="navigation">
     <navigator class="{{active1}}" id="intro" bindtap='proIntro'>项目介绍</navigator>
     <navigator class="{{active2}}" id="file" bindtap='proFile'>文件</navigator>
@@ -10,13 +10,15 @@
       <view class="introLine">
         <navigator class="left">项目名称</navigator>
         <navigator class="right">{{project.name}}</navigator>
+        <view class="clearfix"></view>
       </view>
-      <view class="introLine">
+      <view class="introLine"> 
         <navigator class="left">项目成员</navigator>
         <navigator class="right">
         <text wx:for="{{project.member}}" wx:key="key">{{item.userName}}<text decode='{{true}}' space='{{true}}'>&nbsp;&nbsp;</text></text>
         <navigator style='clear:left'></navigator>
         </navigator>
+        <view class="clearfix"></view>
       </view>
     </view>
   </view>
@@ -24,11 +26,22 @@
   <view id='proFile' style='display:{{navigation2}}'>
     <view class="filePage">
       <view class="fileLine" wx:for="{{project.file}}" wx:key="key">
-        <navigator class="left"><image src='../../image/{{item.kind}}.png'></image>{{item.name}}</navigator>
-        <navigator class="right">上传者：{{item.author}}</navigator>
+        <navigator class="left"  bindtap="previewImage" data-path="{{item.filePath}}"><image src='{{item.filePath}}'></image>{{item.name}}</navigator>
+        <text class="right">上传者：{{item.uplodName}}</text>
+        <view class="clearfix"></view>
       </view>
     </view>
-    <button class="btn" id="upload" bindtap='upload'>上传文件</button>
+    <button class="btn" id="upload" bindtap='upload' style='display:{{statusNavigation}}'>上传文件</button>
+     <view wx:if="{{showModal}}" class="modal-mask"></view>
+    <view class="modal-dialog" wx:if="{{showModal}}">
+      <view class="modal-head">重命名文件</view>
+      <view class="modal-content">
+        <input placeholder='请输入文件名字' type="text" bindinput='fileName' auto-focus/>
+      </view>
+      <view class="modal-footer">
+        <view class="btn-confirm" bindtap='onConfirm'>确定</view>
+      </view>
+    </view>
   </view>
   
 </view>

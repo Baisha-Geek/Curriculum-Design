@@ -4,6 +4,7 @@ var util = require('../../utils/util.js')
 
 const app = getApp();
 
+
 Page({
   data: {
     login: false,
@@ -11,12 +12,20 @@ Page({
       authority: 0,
       name: ""
     },
+    searchName:"",
     documentList: [],
+    documentList2:[],
+    imageList: [],
     navigation1: "",
     navigation2: "none",
-    active1: "active",
+    active1: "active", 
     active2: "unactive",
     limit: "none"
+  },
+  fileName: function (e) {
+    this.setData({
+      searchName: e.detail.value
+    })
   },
   search:function(e){
     var that=this;
@@ -36,14 +45,14 @@ Page({
         header: {
           'Content-Type': 'application/json'
         },
-        data: { userName: getApp().globalData.userName, logged: getApp().globalData.login },
+        data: { userId: getApp().globalData.id, logged: getApp().globalData.login,fileName:that.data.searchName },
         success(result) {
           if (result) {
             that.setData({
-              documentList: result.data.documentTable
+              documentList: result.data.documentTable,
+              documentList2:result.data.documentTable2
             })
           }
-          console.log(result.data.documentTable);
         }
       })
       that.setData({
@@ -51,13 +60,16 @@ Page({
         user: {
           name: getApp().globalData.userName
         }
-      })
+      });
+      var i=0;
+      for (i = 0; i < this.data.documentList.length; i++) {
+        this.data.imageList[i] = this.data.documentList[i].filePath;
+      }
+      for(var j=0;j<this.data.documentList2.length;j++){
+        this.data.imageList[i+j]=this.data.documentList2[j].filePath;
+      }
     }
-    console.log(that.data.login);
   },
-  onShow: function (e) {
-  },
-
   onShow: function (e) {
     if (app.globalData.userName === '') {
       this.setData({
@@ -77,4 +89,10 @@ Page({
     }
     console.log(this.data.login);
   },
+  previewImage: function (e) {
+    wx.previewImage({
+      current: e.currentTarget.dataset.path,
+      urls: this.data.imageList
+    })
+  }
 })

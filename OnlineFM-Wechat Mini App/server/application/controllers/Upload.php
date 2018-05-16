@@ -13,8 +13,10 @@ class Upload extends CI_Controller {
         //从前端获取输入
         $raw = file_get_contents('php://input');
         $data = json_decode($raw, true);
-        $frontProjectName = $data['projectName'];
-        $frontUplodName = $data['uplodName'];
+        $frontProject = $_POST['projectId'];
+        $frontUplod = $_POST['uplodName'];
+        $fileName = $_POST['fileName'];
+        $uploadId= $_POST['uplodId'];
 
         // 处理文件上传
         $file = $_FILES['file']; // 去除 field 值为 file 的文件
@@ -79,8 +81,10 @@ class Upload extends CI_Controller {
             DB::insert('file', [
                 'fileName' => $fileKey,
                 'filePath' => $uploadStatus['ObjectURL'],
-                'projectName' => $frontProjectName,
-                'uplodName' =>  $frontUplodName ,
+                'projectID' => $frontProject,
+                'uplodName' =>  $frontUplod ,
+                'uplodID'=>$uploadId,
+                'name' => $fileName
             ]);
 
             $this->json([

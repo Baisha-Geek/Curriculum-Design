@@ -40,12 +40,21 @@
   margin-right: 10px
 }
 .left{
+  width: 30%;
   float: left
 }
 .right{
+  width: 70%;
   font-size: 12px;
   opacity: 0.3;
   text-align: right;
+  float: right;
+}
+.filePage .left{
+  width: 300rpx;
+}
+.filePage .right{
+  width: 350rpx;
 }
 .btn{
   margin-top: 20px;
@@ -53,4 +62,68 @@
   background-color: #00bbf0;
   color:#fff;
   font-size: 14px;
+}
+.clearfix{
+  clear: both
+}
+
+/* 模态框 */
+.modal-mask {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.5;
+  overflow: hidden;
+  z-index: 9000;
+  color: #fff;
+}
+
+.modal-dialog {
+  width: 200px;
+  position: fixed;
+  top: 50%;
+  left:50%;
+  height: 88px;
+  z-index: 9999;
+  background: #fff;
+  opacity: 1;
+  margin: -100px;
+  border-radius: 4px;
+}
+
+.modal-head {
+  padding: 4px;
+  font-size: 16px;
+  color: #030303;
+  text-align: center;
+  background-color:#f9f9f9;
+}
+
+.modal-content {
+  overflow-y: scroll;
+  height: 32px;
+  padding: 2px;
+  box-sizing: border-box;
+  font-size: 14px
+}
+.checkbox{
+  margin-bottom:4px;
+}
+
+.modal-footer {
+  display: flex;
+  flex-direction: row;
+  height: 28px;
+  border-top: 1px solid #dedede;
+  font-size: 16px;
+  /* line-height: 20px; */
+}
+
+.btn-confirm {
+  width: 100%;
+  color: #ec5300;
+  text-align: center;
 }

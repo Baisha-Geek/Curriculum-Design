@@ -8,7 +8,8 @@ class Search extends CI_Controller {
 
         $raw = file_get_contents('php://input');
         $data = json_decode($raw, true);
-
+        $fileName = $data['fileName'];
+        $userId=$data['userId'];
         if($data['logged']===false){
             $this->json([
                 'status' => -1,
@@ -16,29 +17,23 @@ class Search extends CI_Controller {
             ]);
         }
         else{
+            $filePro = DB::select('file',['filePath','name'],['name'=>$fileName]);
+            $fileTalk = DB::select('filetalk',['filePath','name'],['name'=>$fileName]);
+
 //            $frontNumber = $data['userNumber'];
-            $documentList = array(
-                array("name"=>"doc1",
-                    "id"=>"1"),
-                array("name"=>"doc1",
-                    "id"=>"1"),
-            );
+//            $documentList = array(
+//                array("name"=>"doc1",
+//                    "id"=>"1"),
+//                array("name"=>"doc1",
+//                    "id"=>"1"),
+//            );
 //            $projectInfo = DB::select('project', ['id','projectName','status'], ['creatPeo' => $frontNumber]);
 
-            //项目不存在
-            if($documentList  == NULL){
-                $this->json([
-                    'status' => -1,
-                    'message' => '目前没有文档'
-                ]);
-            }
-            else{
-                $this->json([
-                    'status' => 0,
-                    'message' => '已获得文档列表',
-                    'documentTable' => $documentList
-                ]);
-            }
+            $this->json([
+                'status'=>0,
+                'documentTable'=>$filePro,
+                'documentTable2'=>$fileTalk
+            ]);
         }
     }
 }

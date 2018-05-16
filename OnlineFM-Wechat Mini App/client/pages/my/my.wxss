@@ -5,10 +5,29 @@ page {
     flex-direction: column;
     justify-content: flex-start;
 }
-.container{
-  padding: 0;
+.userinfo{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 20px;
+  height:60px;
+  margin-bottom: 10px;
+  background-color:#fff;
+  border-bottom:10px solid #f9f9f9
 }
- .userinfo,.tunnel {
+.userinfo-avatar{
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  padding: 0;
+  position: absolute;
+  left: 50%;
+  margin-left:-25px;
+}
+.clear{
+  clear:both;
+}
+ .tunnel {
     margin-top: 40rpx;
     height: 140rpx;
     width: 100%;
@@ -21,12 +40,12 @@ page {
     align-items: center;
     transition: all 300ms ease;
 }
- .userinfo-avatar {
+ /* .userinfo-avatar {
     width: 100rpx;
     height: 100rpx;
     margin: 20rpx;
     border-radius: 50%;
-}  
+}   */
 .clear{
   clear:both;
 }
@@ -51,6 +70,9 @@ page {
   background-color: #00bbf0;
   color:#fff;
   font-size: 16px;
+}
+.btn.small{
+  width: 200px
 }
 .infoInput{
   background-color:#f0f0f0;
