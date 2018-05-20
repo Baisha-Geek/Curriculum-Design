@@ -2,7 +2,7 @@
   <view wx:if="{{login}}" class="box">
       <view id="searchline">
         <icon class="input" type="search"/>
-        <input class="input" id="inputLine" bindinput="fileName" placeholder="搜索文档"/>
+        <input class="input" id="inputLine" bindinput="fileName" value="{{searchName}}" placeholder="搜索文档"/>
         <icon class="input" bindtap='search' type="success_no_circle" id="check" color="gray"/>
       </view>
       <view id="doclist" >
@@ -12,6 +12,9 @@
         <view class="item" wx:for="{{documentList2}}" wx:key="key">
           <navigator class="left"  bindtap="previewImage" data-path="{{item.filePath}}"><image src='{{item.filePath}}'></image>{{item.name}}</navigator>
         </view>
+        <view class="item" style='display:{{none_display}}'>
+            <text>无搜索结果</text>
+         </view>
       </view>
   </view>
   <view wx:else class='box'> 

@@ -19,6 +19,11 @@ Page({
       number: '',
       password: '',
     },
+    change:{
+      oldpwd:"",
+      newpwd:""
+    },
+    reset:false,
     login: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
   },
@@ -158,8 +163,69 @@ Page({
       })
     } 
   },
-  numberBind:function(){
+  resetsubmit:function (e) {
+    var that=this;
+    if(e.detail.value.oldpwd===""||e.detail.value.newpwd===""){
+      wx.showModal({
+        title: '提示',
+        content: '输入不能有空，请检查输入',
+        success: function (res) {
+          if (res.confirm) {
+            return;
+          }
+        }
+      })
+    }
+    else{
+      wx.request({
+          url:config.service.updatePwdUrl,
+          method:'POST',
+          header: {
+              'Content-Type': 'application/json'
+          },
+          data:{ logged:true,number:that.data.user.number,passwordfirst:e.detail.value.oldpwd,passwordsecond:e.detail.value.newpwd},
+          success:function (res) {
+              if (res.data.status===0){
+                  util.showSuccess('修改成功');
+                  that.setData({
+                      user: {
+                          name: getApp().globalData.userName,
+                          number: that.data.user.number,
+                      },
+                      login: true,
+                      reset:false
+                  })
+              }
+              else{
+                wx.showModal({
+                  title: '提示',
+                  content: res.data.message,
+                  success: function (res) {
+                    if (res.confirm) {
+                      return;
+                    }
+                  }
+                })
+              }
+          }
+      })
+    }
+  },
+  cancelReset:function () {
+       this.setData({
+           reset:false
+       })
+  },
 
+  resetpwd:function () {
+    var that=this;
+    that.setData({
+        change:{
+            oldpwd:"",
+            newpwd:""
+        },
+        reset:true
+    })
   },
   relogin: function(){
     var that = this;

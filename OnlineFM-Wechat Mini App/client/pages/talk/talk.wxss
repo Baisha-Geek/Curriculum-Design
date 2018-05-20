@@ -49,6 +49,9 @@
 .talkLine text{
   margin: 0 auto;
 }
+.center{
+  text-align: center;
+}
  .talkName{
   float: left
 } 

@@ -10,5 +10,23 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="PHP" type="php">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/server/vendor/composer" />
+          <root url="file://$MODULE_DIR$/server/vendor/guzzle/guzzle" />
+          <root url="file://$MODULE_DIR$/server/vendor/qcloud/cos-sdk-v5" />
+          <root url="file://$MODULE_DIR$/server/vendor/qcloud/weapp-sdk" />
+          <root url="file://$MODULE_DIR$/server/vendor/symfony/event-dispatcher" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/server/vendor/composer" />
+          <root url="file://$MODULE_DIR$/server/vendor/guzzle/guzzle" />
+          <root url="file://$MODULE_DIR$/server/vendor/qcloud/cos-sdk-v5" />
+          <root url="file://$MODULE_DIR$/server/vendor/qcloud/weapp-sdk" />
+          <root url="file://$MODULE_DIR$/server/vendor/symfony/event-dispatcher" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>

@@ -15,42 +15,55 @@
           <block wx:if="{{item.object == 0}}">  
             <view class='message-right'>  
               <view class='message-row'>
+
                 <image class='message-img' src='{{item.head_owner}}'></image>
-                <view wx:if='{{!item.is_img}}' class='sanjiao my'></view>
-                <text wx:if='{{!item.is_img}}' class='message-txt'>{{item.content}}</text>  
-                <image wx:if='{{item.is_img}}' src='{{item.content}}' class='message-imagecontent'></image>
+                <text class="message-user">{{item.username}}</text>
+                <view class="message-box">
+                  <view wx:if='{{!item.is_img}}' class='sanjiao my'></view>
+                  <text wx:if='{{!item.is_img}}' class='message-txt'>{{item.content}}</text>
+                  <navigator  wx:if='{{item.is_img}}' class='message-imagecontent' bindtap="previewImage" data-path="{{item.content}}"><image src='{{item.content}}' class='message-imagecontent'></image></navigator>
+                  <view class="clearfix"></view>
+                </view>
               </view>  
             </view> 
           </block>  
           <block wx:else>  
             <view class='message-left'>  
               <view class='message-row'>  
-                <image class='message-img' src='{{item.head_owner}}'></image>  
-                <view wx:if='{{!item.is_img}}' class='sanjiao you'></view>  
-                <text wx:if='{{!item.is_img}}' class='message-txt'>{{item.content}}</text>
-                <image wx:if='{{item.is_img}}' src='{{item.filePath}}' class='message-imagecontent'></image>
+                <image class='message-img' src='{{item.head_owner}}'></image>
+                <text class="message-user">{{item.username}}</text>
+                <view class="message-box">
+                  <view wx:if='{{!item.is_img}}' class='sanjiao you'></view>
+                  <text wx:if='{{!item.is_img}}' class='message-txt'>{{item.content}}</text>
+                  <navigator wx:if='{{item.is_img}}' class='message-imagecontent' bindtap="previewImage" data-path="{{item.content}}"><image src='{{item.content}}' class='message-imagecontent'></image></navigator>
+                  <view class="clearfix"></view>
+                </view>
+
               </view>  
             </view>  
           </block>  
         </scroll-view>  
     </view> 
     <view class="bottom" id="bottom"></view>
-    <view class="sendmessage">
+    <view wx:if="{{running}}" class="sendmessage">
       <image bindtap="upload" class='add_img' src='../../image/addImg.png'></image>
       <input type="emoji" bindinput="bindChange" confirm-type="done" value='{{message_input}}' placeholder="" />  
       <button catchtap="add">发送</button>
       <input style='display:none' type="" bindinput="bindChange" confirm-type="done" placeholder="" />
       <view wx:if="{{showModal}}" class="modal-mask"></view>
       <view class="modal-dialog" wx:if="{{showModal}}">
-      <view class="modal-head">重命名文件</view>
-      <view class="modal-content">
-        <input placeholder='请输入文件名字' type="text" bindinput='filename' auto-focus/>
-      </view>
-      <view class="modal-footer">
-        <view class="btn-confirm" bindtap='onConfirm'>确定</view>
+        <view class="modal-head">重命名文件</view>
+        <view class="modal-content">
+          <input placeholder='请输入文件名字' type="text" bindinput='filename' auto-focus/>
+        </view>
+        <view class="modal-footer">
+          <view class="btn-confirm" bindtap='onConfirm'>确定</view>
+        </view>
       </view>
     </view>
-    </view>  
+    <view wx:else class='bottombtn'>
+      <button class="btn" bindtap='outputlog'>导出聊天记录</button>
+    </view>
   </view>
 
 
@@ -58,9 +71,12 @@
   <view id='talkFile' style='display:{{navigation2}}'>
     <view class="filePage">
       <view class="fileLine" wx:for="{{talk.file}}" wx:key="key">
-        <navigator class="left"  bindtap="previewImage" data-path="{{item.filePath}}"><image src='{{item.filePath}}'></image>{{item.fileName}}</navigator>
-        <navigator class="right">上传者：{{item.uploadName}}</navigator>
+        <navigator class="left"  bindtap="previewImage" data-path="{{item.filePath}}"><image src='{{item.filePath}}'></image>{{item.name}}</navigator>
+        <navigator class="right">上传者：{{item.uplodName}}</navigator>
         <view class="clearfix"></view>
+      </view>
+      <view class="fileLine center" style='display:{{none_display}}'>
+        <text>暂无文件</text>
       </view>
     </view>
   </view>

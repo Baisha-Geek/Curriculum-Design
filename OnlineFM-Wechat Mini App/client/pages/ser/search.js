@@ -20,7 +20,8 @@ Page({
     navigation2: "none",
     active1: "active", 
     active2: "unactive",
-    limit: "none"
+    limit: "none",
+    none_display:"none"
   },
   fileName: function (e) {
     this.setData({
@@ -51,7 +52,27 @@ Page({
             that.setData({
               documentList: result.data.documentTable,
               documentList2:result.data.documentTable2
-            })
+            });
+            if(that.data.documentList.length==0&&that.data.documentList2.length==0){
+              that.setData({
+                none_display:"block"
+              })
+            }
+            else{
+              that.setData({
+                none_display:"none"
+              })
+            };
+            var i;
+              for (i = 0; i < that.data.documentList.length; i++) {
+                  that.data.imageList[i] = that.data.documentList[i].filePath;
+              }
+              for(var j=0;j<that.data.documentList2.length;j++){
+                  that.data.imageList[i+j]=that.data.documentList2[j].filePath;
+              }
+              that.setData({
+                  imageList:that.data.imageList
+              });
           }
         }
       })
@@ -61,13 +82,6 @@ Page({
           name: getApp().globalData.userName
         }
       });
-      var i=0;
-      for (i = 0; i < this.data.documentList.length; i++) {
-        this.data.imageList[i] = this.data.documentList[i].filePath;
-      }
-      for(var j=0;j<this.data.documentList2.length;j++){
-        this.data.imageList[i+j]=this.data.documentList2[j].filePath;
-      }
     }
   },
   onShow: function (e) {
@@ -84,10 +98,13 @@ Page({
         login: true,
         user: {
           name: getApp().globalData.userName
-        }
+        },
+          searchName:"",
+          documentList: [],
+          documentList2:[],
+          imageList: [],
       })
     }
-    console.log(this.data.login);
   },
   previewImage: function (e) {
     wx.previewImage({

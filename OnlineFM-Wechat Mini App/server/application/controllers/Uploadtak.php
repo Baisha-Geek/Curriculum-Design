@@ -6,17 +6,17 @@ use \QCloud_WeApp_SDK\Cos\CosAPI as Cos;
 use \QCloud_WeApp_SDK\Constants as Constants;
 use QCloud_WeApp_SDK\Mysql\Mysql as DB;
 
-class Upload extends CI_Controller {
+class Uploadtak extends CI_Controller {
     public function index() {
         DB::getInstance(); //数据库连接
 
         //从前端获取输入
         $raw = file_get_contents('php://input');
         $data = json_decode($raw, true);
-        $frontTalk = $_POST['talkId'];
-        $frontUplod = $_POST['uplodName'];
+        $talkId = $_POST['talkId'];
+        $username = $_POST['username'];
         $fileName = $_POST['fileName'];
-        $uploadId= $_POST['uplodId'];
+        $uploadID= $_POST['uploadID'];
 
         // 处理文件上传
         $file = $_FILES['file']; // 去除 field 值为 file 的文件
@@ -81,20 +81,22 @@ class Upload extends CI_Controller {
             DB::insert('filetalk', [
                 'fileName' => $fileKey,
                 'filePath' => $uploadStatus['ObjectURL'],
-                'talkID' => $frontTalk,
-                'uplodName' =>  $frontUplod ,
-                'uplodID'=>$uploadId,
+                'talkID' => $talkId,
+                'uplodName' =>  $username ,
+                'uplodID'=>$uploadID,
                 'name' => $fileName
             ]);
-            DB::insert('message',['head_owner'=>$_POST['head_owner'],'talkid'=>$_POST['talkID'],'kind'=>$_POST['kind'],
+            DB::insert('message',['head_owner'=>$_POST['head_owner'],'talkid'=>$_POST['talkId'],'kind'=>$_POST['kind'],
                 'content'=>$uploadStatus['ObjectURL'],'time'=>$_POST['time'],'userid'=>$_POST['uploadID'],'username'=>$_POST['username']]);
 
             $this->json([
                 'code' => 0,
+                'image' => $uploadStatus['ObjectURL']
             ]);
         } catch (Exception $e) {
             $this->json([
                 'code' => 1,
+                'talkid'=>$talkId,
                 'error' => $e->__toString()
             ]);
         }

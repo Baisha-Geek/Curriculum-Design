@@ -14,6 +14,9 @@
             <navigator class="endTalk" id="end{{item.id}}" bindtap='endOneTalk' data-id="{{item.id}}" data-name="{{item.talkName}}" style='display:{{item.is_display}}'>结束群聊</navigator>
             <view class='clear'></view>
           </view>
+          <view class="talkLine center" style='display:{{none_display}}'>
+            <text>暂无群聊</text>
+          </view>
         </view>
         <view id="newTalk">
           <image bindtap="newTalk" src='../../image/add.png'/>
@@ -28,6 +31,9 @@
           <image src="../../image/talk.png"/>
           <navigator class="talkName" bindtap='oneTalk' data-id="{{item.id}}" data-name="{{item.talkName}}">{{item.talkName}}</navigator>
           <view class='clear'></view>
+        </view>
+        <view class="talkLine center" style='display:{{none_display}}'>
+          <text>暂无群聊</text>
         </view>
       </view>
     </view>

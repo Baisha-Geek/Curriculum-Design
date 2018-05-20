@@ -16,8 +16,10 @@ class Endtalk extends CI_Controller {
         DB::getInstance();
         $raw = file_get_contents('php://input');
         $data = json_decode($raw,true);
+
 //        status状态 0:已结束项目 -1:无此项目或权限不足
         $userName = $data['userName'] ;
+
         if(DB::select('user',['*'],['id' => $data['userId'],'root' => 1] )!=[]) {
 //            管理员权限
             if(DB::update('talk',['status' => 1], ['id' => $data['talkId']])==0) {
@@ -26,24 +28,26 @@ class Endtalk extends CI_Controller {
                     'message' => '无此群聊'
                 ]);
             }
-            else return $this->json([
-                'status' => 0,
-                'message' => '已结束群聊'
-            ]);
-
+            else{
+                return $this->json([
+                    'status' => 0,
+                    'message' => '已结束群聊'
+                ]);
+            }
         }
         else {
-            if(DB::update('talk',['status' => 1],['id' => $data['talkId'] , ['creatName' => $userName]])==0) {
+            if(DB::update('talk',['status' => 1],['id' => $data['talkId'], 'creatName' => $userName])==0) {
                 return $this->json([
                     'status' => -1,
                     'message' => '无此群聊或权限不足'
                 ]);
             }
-            else return $this->json([
-                'status' => 0,
-                'message' => '已结束群聊'
-            ]);
+            else{
+                return $this->json([
+                    'status' => 0,
+                    'message' => '已结束群聊'
+                ]);
+            }
         }
     }
-
 }

@@ -63,25 +63,32 @@ Page({
   },
   endOnePro:function(e){
     var that=this;
-    wx.request({
-      url: config.service.endOneProUrl,
-      method:'POST',
-      header:{
-        'Content-Type':'application/json'
-      },
-      data: { userName: getApp().globalData.userName, proId: e.currentTarget.dataset.id,projectName:e.currentTarget.dataset.name,userId:getApp().globalData.id},
-      success(res){
-        if(res.data.status===0){
-          wx.showToast({
-            title: '已结束项目',
-            icon: 'success',
-            duration: 2000
-          });
-          that.allPros();
-        }
-      }
-    })
-
+      wx.showModal({
+          title: '提示',
+          content: '是否结束项目'+e.currentTarget.dataset.name,
+          success: function (res) {
+              if (res.confirm) {
+                wx.request({
+                  url: config.service.endOneProUrl,
+                  method:'POST',
+                      header:{
+                          'Content-Type':'application/json'
+                      },
+                      data: { userName: getApp().globalData.userName, proId: e.currentTarget.dataset.id,projectName:e.currentTarget.dataset.name,userId:getApp().globalData.id},
+                      success(res){
+                          if(res.data.status===0){
+                              wx.showToast({
+                                  title: '已结束项目',
+                                  icon: 'success',
+                                  duration: 2000
+                              });
+                              that.allPros();
+                          }
+                      }
+                  })
+              }
+          }
+      })
   },
   endPros: function (e) {
     var that=this;
@@ -99,13 +106,23 @@ Page({
       },
       //获取已结束的项目
       data: { userName: getApp().globalData.userName, userId: getApp().globalData.id, status:"1",logged: getApp().globalData.login },
-      success(result) {
-        if (result) {
-          that.setData({
-            project: result.data.projectTable
-          })
+        success(result) {
+            if (result) {
+                that.setData({
+                    project: result.data.projectTable
+                });
+                if(that.data.project.length===0){
+                    that.setData({
+                        none_display:"block"
+                    })
+                }
+                else{
+                    that.setData({
+                        none_display:"none"
+                    })
+                }
+            }
         }
-      }
     })
   },
   allPros: function (e) {

@@ -8,32 +8,68 @@
     </block>
     <view class="clear"></view>
   </view>
-     <view wx:if="{{login}}" id="infoMain">
-      <view class="line"><navigator class="infoLeft">姓名：</navigator><navigator class="infoRight">{{user.name}}</navigator>
-        <view class="clear"></view>
-      </view>
-      <view class="line"><navigator class="infoLeft">学工号：</navigator><navigator class="infoRight">{{user.number}}</navigator>
-        <view class="clear"></view>
-      </view>
-      <view class="line"><button class="btn" id="relogin" bindtap='relogin'>重新绑定</button></view>
-    </view> 
-
-    <view wx:else id="infoLogin">
-      <form bindsubmit='formSubmit' bindreset='formReset'>
+    <view wx:if="{{!reset}}" id='infoMain'>
+      <view wx:if="{{login}}">
         <view class="line">
-          <navigator class="infoLeft" >学工号：</navigator>
-          <input name="number" class="infoRight infoInput"/>
+          <navigator class="infoLeft">姓名：</navigator><navigator class="infoRight">{{user.name}}</navigator>
           <view class="clear"></view>
         </view>
         <view class="line">
-          <navigator class="infoLeft" >密码：</navigator>
-          <input name="password" password='true' class="infoRight infoInput"/>
+          <navigator class="infoLeft">学工号：</navigator><navigator class="infoRight">{{user.number}}</navigator>
           <view class="clear"></view>
         </view>
         <view class="line">
-          <button class="btn" form-type='submit'>绑定</button>
+          <view class="half">
+            <button class="btn relogin" bindtap='relogin'>重新绑定</button>
+          </view>
+          <view class="half">
+            <button class="btn resetpwd" bindtap='resetpwd'>修改密码</button>
+          </view>
+          <view class="clear"></view>
+        </view>
+      </view>
+      <view wx:else id="infoLogin">
+        <form bindsubmit='formSubmit' bindreset='formReset'>
+          <view class="line">
+            <navigator class="infoLeft" >学工号：</navigator>
+            <input name="number" class="infoRight infoInput"/>
+            <view class="clear"></view>
+          </view>
+          <view class="line">
+            <navigator class="infoLeft" >密码：</navigator>
+            <input name="password" password='true' class="infoRight infoInput"/>
+            <view class="clear"></view>
+          </view>
+          <view class="line">
+            <button class="btn" form-type='submit'>绑定</button>
+          </view>
+        </form>
+      </view> 
+    </view>
+    <view wx:else id="infoReset">
+      <form bindsubmit='resetsubmit' bindreset='resetReset'>
+        <view class="line">
+          <text class="infoLeft">输入新密码:</text>
+          <input name="oldpwd"  password='true' class='infoRight infoInput'/>
+          <view class='clear'></view>
+        </view>
+        <view class="line">
+          <text class="infoLeft">确认新密码:</text>
+          <input name="newpwd"  password='true' class='infoRight infoInput'/>
+          <view class='clear'></view>
+        </view>
+        <view class="line">
+          <view class="line">
+          <view class="half">
+            <button class="btn relogin" form-type="submit">确定</button>
+          </view>
+          <view class="half">
+            <button class="btn resetpwd" bindtap='cancelReset'>取消</button>
+          </view>
+          <view class="clear"></view>
+        </view>
         </view>
       </form>
-    </view> 
+    </view>
 
 </view>

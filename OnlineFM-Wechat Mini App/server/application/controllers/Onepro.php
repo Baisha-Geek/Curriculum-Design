@@ -13,7 +13,7 @@ class Onepro extends CI_Controller {
         $userId = $data['userId'];
         $proId = $data['proId'];
         $userName = $data['userName'];
-        $rawSelectData = DB::row('project',['id','projectName'],['id' => $proId]);
+        $rawSelectData = DB::row('project',['id','projectName','status'],['id' => $proId]);
         if($rawSelectData == NULL) {
             return $this->json([
                 'status' => -1,
@@ -22,7 +22,7 @@ class Onepro extends CI_Controller {
             ]);
         }
         else {
-            $fileInfo = DB::select('file',['filePath','name','uplodName','uplodID'],['projectID'=>$proId]);
+            $fileInfo = DB::select('file',['id','filePath','name','uplodName','uplodID'],['projectID'=>$proId]);
             $member = DB::select('pmember', ['member'], ['pid' => $proId]);
             if (DB::select('user', ['*'], ['id' => $userId, 'root' => 1]) == []) {
                 $flag = false;
@@ -56,6 +56,7 @@ class Onepro extends CI_Controller {
                     'proid' =>$proId,
                     'name' => $rawSelectData->projectName,
                     'file' => $fileInfo,
+                    'status' =>$rawSelectData->status
                 ],
             ]);
         }

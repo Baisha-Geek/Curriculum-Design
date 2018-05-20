@@ -10,6 +10,7 @@ Page({
     user: {
       name: ""
     },
+    running:true,
     path: "",
     imageList: [],
     talk:{},
@@ -26,26 +27,40 @@ Page({
     active2: "unactive",
     showModal: false,
     filename: "",
-    tempFilePaths: ""
-  },
+    tempFilePaths: "",
+    none_display:"",
+  }, timer:'',
   onLoad: function (data) {
     var that = this;
+
     that.setData({
       name:data.talkname,
-      id:data.talkid
-    })
-    that.getMessage();
-    this.setData({
+      id:data.talkid,
       user: {
         name: getApp().globalData.userName
       }
     });
-    wx.setNavigationBarTitle({ title: that.data.name });  
+    wx.setNavigationBarTitle({ title: that.data.name });
+  },
+  onShow:function () {
+    clearTimeout(this.timer)
+    var that=this;
+      var page=getCurrentPages();
+      console.log(page);
+      that.bottom()
+    that.getMessage(1);
+  },
+  onUnload:function () {
+
+    clearTimeout(this.timer)
+  },
+  onHide:function () {
+     clearTimeout(this.timer)
   },
   // 切换导航
   talkFile: function (e) {
     for (var i = 0; i < this.data.talk.file.length; i++) {
-      this.data.imageList[i] = this.data.project.file[i].filePath;
+      this.data.imageList[i] = this.data.talk.file[i].filePath;
     }
     this.setData({
       navigation1: "none",
@@ -71,7 +86,6 @@ Page({
       sourceType: ['album', 'camera'],
       success: function (res) {
         that.data.tempFilePaths = res.tempFilePaths;
-        console.log(that.data.tempFilePaths);
         that.setData({
           showModal: true
         })
@@ -113,36 +127,43 @@ Page({
       });
       var creatTime = new Date();
       var time = that.dateFtt("yyyy-MM-dd hh:mm:ss", creatTime);
-      // var uploadImgCount=0;
-      // for(var i=0,h=tempFilePaths.length;i<h;i++){
       wx.uploadFile({
         url: config.service.uploadTalkUrl,
         filePath: that.data.tempFilePaths[0],
         name: "file",
         formData: {
           'head_owner': getApp().globalData.userInfo.avatarUrl,
-          'talkID': that.data.talk.id,
+          'talkId': that.data.id,
           'kind':"image",
           'time':time,
           'uploadID': getApp().globalData.id,
           'username':getApp().globalData.userName,
-          'fileName': encodeURI(that.data.filename)
+          'fileName': that.data.filename
         },
         header: {
           "Content-Type": "multipart/form-data",
           'accept': 'application/json',
         },
         success: function (res) {
-          wx.showToast({
-            title: '上传成功',
-            icon: "success",
-            duration: 1000
-          });
+          if(res.data.code==1){
+              wx.showModal({
+                  title: '错误提示',
+                  content: res.data.message,
+                  showCancel: false,
+                  success: function (res) { }
+              })
+          }
+          else{
+              wx.showToast({
+                  title: '上传成功',
+                  icon: "success",
+                  duration: 1000
+              });
+          }
           that.setData({
             tempFilePaths: "",
             filename: ""
           });
-          that.getMessage();
         },
         fail: function (res) {
           wx.showModal({
@@ -168,6 +189,7 @@ Page({
   },
   getMessage:function (e) {
     var that=this;
+    console.log(e);
       wx.request({
           url: config.service.oneTalkUrl,
           method: 'POST',
@@ -181,6 +203,16 @@ Page({
                       talk: result.data.talkInfo,
                       receiveMessage: result.data.receiveMessage,
                   });
+                  if(result.data.talkInfo.file.length==0){
+                    that.setData({
+                        none_display:"block"
+                    })
+                  }
+                  else{
+                    that.setData({
+                        none_display:"none"
+                    })
+                  }
                   for (var i = 0; i < result.data.receiveMessage.length;i++){
                     if (result.data.receiveMessage[i].userid==getApp().globalData.id){
                           that.data.receiveMessage[i].object = 0;
@@ -200,24 +232,34 @@ Page({
                   that.setData({
                     receiveMessage: that.data.receiveMessage
                   });
-                  that.bottom();
               };
-              if(e){
-                setTimeout(function(){
-                  that.bottom();
-                },500);
+              if(that.data.talk.status=="1"){
+                that.setData({
+                  running:false,
+                   oldMessage:that.data.receiveMessage
+                });
+                return;
+              }
+              else{
+                that.setData({
+                  running:true
+                })
+              }
+              if(that.data.talk.status!=1){
+                  that.timer=setTimeout(function () {
+                      if (that.data.receiveMessage.length != that.data.oldMessage.length) {
+                          that.setData({
+                              oldMessage: that.data.receiveMessage
+                          });
+                          that.bottom();
+                      }
+                      //定时向服务器发送请求获取信息
+                      that.getMessage(0);
+                      // that.bottom();
+                  }, 1000);
               }
           }
       });
-      setTimeout(function () {
-        if (that.data.receiveMessage.length != that.data.oldMessage.length){
-          that.setData({
-            oldMessage:that.data.receiveMessage
-          })
-        }
-        //定时向服务器发送请求获取信息
-        that.getMessage()
-      }, 3000);
   },
   // 聊天
   bindChange: function (e) {
@@ -242,7 +284,6 @@ Page({
         success(res){
           if (res.data.status == 0) {
             var a = true;
-            that.getMessage(a);
             that.setData({
               message_input: '',
               newMessage: {
@@ -261,15 +302,12 @@ Page({
   },
   // 获取hei的id节点然后屏幕焦点调转到这个节点  
   bottom: function () {
-    var query = wx.createSelectorQuery()
-    query.select('#bottom').boundingClientRect()
-    query.selectViewport().scrollOffset()
-    query.exec(function (res) {
-      wx.pageScrollTo({
-        scrollTop: res[0].bottom  // #the-id节点的下边界坐标  
-      })
-      res[1].scrollTop // 显示区域的竖直滚动位置  
-    })
+      wx.createSelectorQuery().select('#bottom').boundingClientRect(function(rect){
+          // 使页面滚动到底部
+          wx.pageScrollTo({
+              scrollTop: rect.bottom
+          })
+      }).exec()
   },  
   // 格式化时间
   dateFtt:function(fmt, date)   
@@ -290,5 +328,47 @@ Page({
     if (new RegExp("(" + k + ")").test(fmt))
       fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;   
-  } 
+  } ,
+  //导出聊天记录
+  outputlog:function(){
+    var that=this;
+    wx.request({
+      url: config.service.outputLogUrl,
+      method: 'POST',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      data: { talkId: that.data.id},
+      success(result) {
+        if (result.data.status == 0) {
+          console.log(result);
+          wx.showModal({
+              title:"地址",
+              content:result.data.fileUrl,
+              success:function (response) {
+                  if(response.confirm){
+                      wx.setClipboardData({
+                          data: result.data.fileUrl,
+                          success: function(res) {
+                              wx.getClipboardData({
+                                  success: function(res) {
+                                      return;
+                                  }
+                              })
+                          }
+                      })
+                  }
+              }
+          })
+        } 
+        else {
+            wx.showToast({
+                title: '网络问题，请稍后！',
+                icon: 'none',
+                duration: 2000//持续的时间
+            })
+        }  
+      }
+    })
+  }
 })

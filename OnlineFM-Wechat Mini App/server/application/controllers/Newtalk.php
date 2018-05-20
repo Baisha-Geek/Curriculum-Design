@@ -16,6 +16,7 @@ class Newtalk extends CI_Controller {
         $raw = file_get_contents('php://input');
         $data = json_decode($raw,true);
         $member = $data['member'];
+
 //        status状态 0:已创建项目(正常)   -1:权限不足   -2:同名项目已创建   -3:插入异常
 //        if(DB::select('user',['userName'],['userName' => $data['creatName'], 'root' => 1])== []) {
 //            return $this->json([
@@ -24,6 +25,7 @@ class Newtalk extends CI_Controller {
 //            ]);
 //        }
 //        检查项目名和创建者是否都相同
+
         if(DB::select('talk',['*'],['creatName' =>$data['creatName'], 'talkName' => $data['talkName']])){
             return $this->json([
                 'status' => -2,
@@ -32,11 +34,13 @@ class Newtalk extends CI_Controller {
         }
         else {
             DB::insert('talk',['creatName' => $data['creatName'], 'talkName' =>$data['talkName'] , 'status' => 0]);
+
             $newId=DB::row('talk',['id'],['creatName' => $data['creatName'], 'talkName' =>$data['talkName']]);
 //            return $this->json([
 //                'id' => $newId,
 //            ]);
             foreach ($member as $key => $value) {
+
                 if(DB::insert('tmember', ['tid' => $newId->id , 'member' => $value])) {
                     continue;
                 }
@@ -47,14 +51,11 @@ class Newtalk extends CI_Controller {
                     ]);
                 }
             }
+
             return $this->json([
                 'status' => 0,
-                'message' => '已创建新群聊',
+                'message' => '已创建新群聊'
             ]);
-
-
-
-
         }
     }
 }

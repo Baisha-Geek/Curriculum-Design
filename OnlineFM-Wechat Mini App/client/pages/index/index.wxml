@@ -14,7 +14,7 @@
             <navigator class="endPro" id="end{{item.id}}" bindtap='endOnePro' data-name="{{item.projectName}}" data-id="{{item.id}}" style='display:{{is_display}}'>结束项目</navigator>
             <view class='clear'></view>
           </view>
-          <view class="projectLine" style='display:{{none_display}}'>
+          <view class="projectLine center" style='display:{{none_display}}'>
           <text>暂无项目</text>
           </view>
         </view>
@@ -32,7 +32,7 @@
           <navigator class="proName" bindtap='onePro' data-id="{{item.id}}" data-name="{{item.projectName}}">{{item.projectName}}</navigator>
           <view class='clear'></view>
         </view>
-        <view class="projectLine" style='display:{{none_display}}'>
+        <view class="projectLine center" style='display:{{none_display}}'>
           <text>暂无项目</text>
         </view>
       </view>

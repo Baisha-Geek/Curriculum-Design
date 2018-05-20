@@ -28,7 +28,11 @@
       <view class="fileLine" wx:for="{{project.file}}" wx:key="key">
         <navigator class="left"  bindtap="previewImage" data-path="{{item.filePath}}"><image src='{{item.filePath}}'></image>{{item.name}}</navigator>
         <text class="right">上传者：{{item.uplodName}}</text>
+        <navigator class='right' bindtap='delete' data-name="{{item.name}}" data-id='{{item.id}}' style="display:{{item.display}}">删除</navigator>
         <view class="clearfix"></view>
+      </view>
+      <view class="fileLine center" style='display:{{none_display}}'>
+        <text>暂无文件</text>
       </view>
     </view>
     <button class="btn" id="upload" bindtap='upload' style='display:{{statusNavigation}}'>上传文件</button>

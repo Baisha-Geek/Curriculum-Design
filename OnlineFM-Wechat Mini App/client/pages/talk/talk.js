@@ -15,7 +15,8 @@ Page({
     navigation2: "none",
     active1: "active",
     active2: "unactive",
-    limit: ""
+    limit: "",
+    none_display:""
   },
 
   onShow: function (e) {
@@ -51,24 +52,33 @@ Page({
   },
   endOneTalk: function(e){
     var that=this;
-    wx.request({
-      url: config.service.endOneTalkUrl,
-      method:'POST',
-      header:{
-        'Content-Type':'application/json'
-      },
-      data: { userName: getApp().globalData.userName, talkId: e.currentTarget.dataset.id, talkName: e.currentTarget.dataset.name, userId: getApp().globalData.id },
-      success(res) {
-        if (res.data.status === 0) {
-          wx.showToast({
-            title: '已结束群聊',
-            icon: 'success',
-            duration: 2000
-          });
-          that.allTalks();
-        }
-      }
-    })
+      wx.showModal({
+          title: '提示',
+          content: '是否确认删除'+e.currentTarget.dataset.name,
+          success: function (res) {
+              if (res.confirm) {
+                  wx.request({
+                      url: config.service.endOneTalkUrl,
+                      method:'POST',
+                      header:{
+                          'Content-Type':'application/json'
+                      },
+                      data: { userName: getApp().globalData.userName, talkId: e.currentTarget.dataset.id, talkName: e.currentTarget.dataset.name, userId: getApp().globalData.id },
+                      success(res) {
+                          if (res.data.status === 0) {
+                              wx.showToast({
+                                  title: '已结束群聊',
+                                  icon: 'success',
+                                  duration: 2000
+                              });
+                              that.allTalks();
+                          }
+                      }
+                  })
+              }
+          }
+      })
+
   },
   endTalks: function (e) {
     var that = this;
@@ -87,11 +97,22 @@ Page({
       //获取已结束的项目
       data: { userName: getApp().globalData.userName, userId:getApp().globalData.id,status: "1", logged: getApp().globalData.login },
       success(result) {
-        if (result) {
-          that.setData({
-            talk: result.data.talkTable
-          })
-        }
+          if (result) {
+              that.setData({
+                  talk: result.data.talkTable
+              });
+              var length = result.data.talkTable.length;
+              if (length == 0) {
+                  that.setData({
+                      none_display: "block"
+                  })
+              }
+              else {
+                  that.setData({
+                      none_display: "none"
+                  });
+              }
+          }
       }
     })
   },
@@ -103,9 +124,6 @@ Page({
       active1: "active",
       active2: "unactive"
     });
-    // wx.navigateBack({
-    //   url: '../index/index'
-    // })
     wx.request({
       url: config.service.getTalksUrl,
       method: 'POST',
@@ -120,17 +138,34 @@ Page({
               talk: result.data.talkTable
           });
           var length=result.data.talkTable.length;
-          for(var i=0;i<length;i++){
-            if(that.data.talk[i].creatName===getApp().globalData.userName){
-                that.data.talk[i].is_display="block";
-            }
-            else{
-                that.data.talk[i].is_display="none";
-            }
+          if(length==0){
             that.setData({
-              talk:that.data.talk
+                none_display:"block"
             })
           }
+          else{
+            that.setData({
+                none_display:"none"
+            });
+            for(var i=0;i<length;i++){
+                if(getApp().globalData.userName=="超级管理员"){
+                    that.data.talk[i].is_display="block"
+                }
+                else{
+                    if(that.data.talk[i].creatName===getApp().globalData.userName){
+                        that.data.talk[i].is_display="block";
+                    }
+                    else{
+                        that.data.talk[i].is_display="none";
+                    }
+                }
+
+                  that.setData({
+                      talk:that.data.talk
+                  })
+              }
+          }
+
         }
       }
     });

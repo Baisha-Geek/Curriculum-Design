@@ -23,7 +23,8 @@ Page({
     active2:"unactive",
     showModal: false,
     fileName:"",
-    tempFilePaths:""
+    tempFilePaths:"",
+    none_display:""
   },
   onLoad:function(data){
     this.setData({
@@ -32,8 +33,10 @@ Page({
         id:data.proid
       }
     })
+      wx.setNavigationBarTitle({ title: data.proname });
     this.getProject();
   },
+    // 获取项目内容
   getProject:function(){
     var that = this;
     wx.request({
@@ -47,7 +50,50 @@ Page({
         if (result) {
           that.setData({
             project: result.data.projectInfo
-          })
+          });
+          if(result.data.projectInfo.file.length==0){
+            that.setData({
+                none_display:"block"
+            })
+          }
+          else{
+            that.setData({
+                none_display:"none"
+            });
+            for (var i = 0; i < that.data.project.file.length; i++) {
+                  that.data.imageList[i] = that.data.project.file[i].filePath;
+              }
+            if(that.data.project.status==="1"){
+                  that.setData({
+                      statusNavigation: "none"
+                  });
+                  for(var i=0;i<that.data.project.file.length;i++){
+                      that.data.project.file[i].display="none";
+                  }
+                  that.setData({
+                      project:that.data.project
+                  })
+              }
+            else{
+                  for(var i=0;i<that.data.project.file.length;i++){
+                      if(that.data.project.file[i].uplodID==getApp().globalData.id){
+                          that.data.project.file[i].display="block";
+                          console.log(that.data.project.file[i].display)
+                      }
+                      else{
+                          that.data.project.file[i].display="none";
+                          console.log(that.data.project.file[i].display)
+                      }
+                      that.setData({
+                          project:that.data.project
+                      })
+                  }
+                  that.setData({
+                      statusNavigation:"block"
+                  })
+              }
+          }
+
         }
       }
     });
@@ -57,20 +103,8 @@ Page({
       }
     })
   },
+    // 切换导航
   proFile:function(e){
-    for (var i = 0; i < this.data.project.file.length; i++) {
-      this.data.imageList[i] = this.data.project.file[i].filePath;
-    }
-    if(this.data.project.status==="1"){
-      this.setData({
-        statusNavigation: "none"
-      })
-    }  
-    else{
-      this.setData({
-        statusNavigation:"block"
-      })
-    }
     this.setData({
       navigation1: "none",
       navigation2: "",
@@ -86,6 +120,7 @@ Page({
       active2: "unactive"
     })
   },
+    // 上传图片
   upload:function(e){
     var that=this;
     wx.chooseImage({
@@ -132,7 +167,6 @@ Page({
         mask: true,
         duration: 5000
       })
-      console.log(that.data.project.proid)
       // var uploadImgCount=0;
       // for(var i=0,h=tempFilePaths.length;i<h;i++){
       wx.uploadFile({
@@ -177,10 +211,49 @@ Page({
       showModal: false
     });
   },
+    // 预览图片，借助微信的保存图片实现下载图片的效果
   previewImage:function(e){
     wx.previewImage({
       current: e.currentTarget.dataset.path,
       urls: this.data.imageList
     })
+  },
+
+  // 删除文件,只有对应的上传者可以删除
+  delete:function(e){
+    var that=this;
+      wx.showModal({
+          title: '提示',
+          content: '是否删除文件'+e.currentTarget.dataset.name,
+          success: function (res) {
+              if (res.confirm) {
+                  wx.request({
+                      url: config.service.deleteFileUrl,
+                      method: 'POST',
+                      header: {
+                          'Content-Type': 'application/json'
+                      },
+                      data: { fileId:e.currentTarget.dataset.id,uploadId:getApp().globalData.id},
+                      success(result) {
+                          if (result.data.status==0) {
+                              wx.showToast({
+                                  title: '删除成功',
+                                  icon: 'success',
+                                  duration: 2000
+                              });
+                              that.getProject();
+                          }
+                          else{
+                              wx.showToast({
+                                  title: result.data.message,
+                                  duration:1000
+                              })
+                          }
+                      }
+                  })
+              }
+          }
+      })
+
   }
 })

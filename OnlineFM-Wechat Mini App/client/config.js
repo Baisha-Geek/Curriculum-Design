@@ -25,6 +25,9 @@ var config = {
         //绑定学号，获取对应的数据，类似于登录
         bindUrl: `${host}/weapp/binduser`,
 
+        //修改密码
+        updatePwdUrl: `${host}/weapp/pwdmodify`,
+
         // 项目接口
 
         // 获取某个用户的项目列表
@@ -55,6 +58,9 @@ var config = {
 
         //创建群聊
         newTalkUrl: `${host}/weapp/newtalk`,
+
+        //导出聊天日志
+        outputLogUrl: `${host}/weapp/outputlog`,
         
         // 公共接口
 
@@ -62,7 +68,10 @@ var config = {
         uploadUrl: `${host}/weapp/upload`,
 
         // 上传图片接口（群聊上传）
-        uploadTalkUrl: `${host}/weapp/uploadtalk`,
+        uploadTalkUrl: `${host}/weapp/uploadtak`,
+
+        // 删除项目文件接口
+        deleteFileUrl: `${host}/weapp/Deletefile`,
 
         // 创建项目和群聊时获取成员的名字
         getMemberUrl: `${host}/weapp/getmember`,

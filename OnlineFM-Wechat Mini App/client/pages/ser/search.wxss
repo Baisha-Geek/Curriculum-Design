@@ -15,15 +15,13 @@
 .input{
   float: left;
 }
-.input:first-child{
-  margin-left: 20px
-}
 .input:last-child{
   float: right;
   margin-right: 20px
 }
 #inputLine{
   margin: 0 5px;
+  width: 500rpx;
   background-color:#ffffff;
   box-sizing: border-box
 }

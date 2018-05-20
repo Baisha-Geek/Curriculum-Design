@@ -39,7 +39,7 @@ class Talks extends CI_Controller {
             else {
                 //非管理员权限
 
-                $query="select talk.id, talk.talkName, talk.creatName, talk.status from talk inner join tmember on talk.id=tmember.pid where tmember.member='$getName' and talk.status='$getStatus'" ;
+                $query="select talk.id, talk.talkName, talk.creatName, talk.status from talk inner join tmember on talk.id=tmember.tid where tmember.member='$getName' and talk.status='$getStatus'" ;
                 $talkInfo = DB::rawselect($query);
                 if($talkInfo != []) {
                     return $this->json([

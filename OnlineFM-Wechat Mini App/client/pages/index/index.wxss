@@ -49,6 +49,9 @@
 .projectLine text{
   margin: 0 auto;
 }
+.center{
+  text-align: center;
+}
  .proName{
   float: left
 } 

@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 use QCloud_WeApp_SDK\Mysql\Mysql as DB;
 
-class Binduser extends CI_Controller {
+class Pwdmodify extends CI_Controller {
     public function index() {
 
         DB::getInstance(); //数据库连接
@@ -29,7 +29,7 @@ class Binduser extends CI_Controller {
                 ]);
             }
             else{
-                if(DB::update('user', ['userPwd' => $frontPwdFirst], ['userName' => $frontNumber])){
+                if(DB::update('user', ['userPwd' => $frontPwdFirst], ['userNumber' => $frontNumber])){
                     $this->json([
                         'status' => 0,
                         'message' => '成功修改用户密码',
